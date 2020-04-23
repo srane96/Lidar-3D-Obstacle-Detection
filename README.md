@@ -5,9 +5,10 @@ This is the first project in Udacity's Sensor Fusion Nanodegree.
 This project is based on PCL library that is used to read and process point cloud data obtained using 3D Lidar sensor. Aim is to detect 3d obstacles (other vehicles) in the surrounding of the ego vehicle and create appropriate bounding boxes around them. This repository has code for both the custom (implemented by me) as well as PCL's built in segmentation and clustering methods. 
 
 ## Pipeline:
-1. Seperate points associated with the road from points associated with the vehicles. For this 3D ransac is implemented. 
-2. Using point cloud of obstacles, all the obstacles are seperated into different clusters. For this, an Euclidean clustering algorithm is implemented which uses KDTree for finding the nearest neighbours of the given point within a given radius.
-3. Each cluster is given a different color and also a bounding box is created for each cluster.
+1. Filter the point cloud data using Voxel grids.  
+2. Seperate points associated with the road from points associated with the vehicles. For this 3D ransac is implemented. 
+3. Using point cloud of obstacles, all the obstacles are seperated into different clusters. For this, an Euclidean clustering algorithm is implemented which uses KDTree for finding the nearest neighbours of the given point within a given radius.
+4. Each cluster is given a different color and also a bounding box is created for each cluster.
 
 ## How to run
 Clone the repo</br>
