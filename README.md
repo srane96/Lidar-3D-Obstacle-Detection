@@ -20,4 +20,10 @@ Then use the following command to run the code </br>
 `./environment`</br>
 
 ## Output
-![](media/ObstacleDetectionFPS.gif)
+![](media/Op.gif)
+
+## Code Structure
+1. Continuous input of pcd data is processed inside the function named `cityBlockStream()` in `environment.cpp`
+2. 3D Ransac is implemented in `processPointClouds.cpp` file, inside the function named `Segment()`.
+3. Eucledean Clustering is implemented in file`processPointClouds.cpp`, inside the `CustomClustering()`.
+4. Custom KDtree is implemented in the file named `src/kdtree.h` with struct named `PCKDTree`. 
