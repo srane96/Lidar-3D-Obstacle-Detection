@@ -9,7 +9,7 @@ struct PCNode
 	int id;
 	PCNode<PointT>* right;
 	PCNode<PointT>* left;
-	PCNode<PointT>(int setId, PointT p)
+	PCNode<PointT>( PointT p, int setId)
 	: id(setId), point(p), right(NULL), left(NULL)
 	{}
 };
@@ -31,22 +31,22 @@ struct PCKDTree
  			uint curr_dim = depth % 3;
  			if(curr_dim == 0)
  			{
- 				if(point.x < *root->point.x)
- 					insertHelper(&(*root->left), depth+1, point, id);
+ 				if(point.x < (*root)->point.x)
+ 					insertHelper(&((*root)->left), depth+1, point, id);
  				else
- 					insertHelper(&(*root->right), depth+1, point, id);
+ 					insertHelper(&((*root)->right), depth+1, point, id);
  			} else if(curr_dim == 1) 
  			{
- 				if(point.y < *root->point.y)
- 					insertHelper(&(*root->left), depth+1, point, id);
+ 				if(point.y < (*root)->point.y)
+ 					insertHelper(&((*root)->left), depth+1, point, id);
  				else
- 					insertHelper(&(*root->right), depth+1, point, id);
+ 					insertHelper(&((*root)->right), depth+1, point, id);
  			} else 
  			{
- 				if(point.z < *root->point.z)
- 					insertHelper(&(*root->left), depth+1, point, id);
+ 				if(point.z < (*root)->point.z)
+ 					insertHelper(&((*root)->left), depth+1, point, id);
  				else
- 					insertHelper(&(*root->right), depth+1, point, id);
+ 					insertHelper(&((*root)->right), depth+1, point, id);
  			}
  		}
 	}

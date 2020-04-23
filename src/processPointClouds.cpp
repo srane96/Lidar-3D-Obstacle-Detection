@@ -2,7 +2,6 @@
 
 #include "processPointClouds.h"
 #include "quiz/cluster/kdtree.h"
-#include "kdtree.h"
 
 //constructor:
 template<typename PointT>
@@ -198,7 +197,7 @@ std::pair<typename pcl::PointCloud<PointT>::Ptr, typename pcl::PointCloud<PointT
 
 // My custom Cluster help function that is called recursively
 template<typename PointT>
-void ProcessPointClouds<PointT>::clusterHelper(int index, std::vector<bool>& processed, typename pcl::PointCloud<PointT>::Ptr cluster, typename pcl::PointCloud<PointT>::Ptr cloud, typename pcl::search::KdTree<PointT>::Ptr tree, float clusterTolerance)
+void ProcessPointClouds<PointT>::clusterHelper(int index, std::vector<bool>& processed, typename pcl::PointCloud<PointT>::Ptr cluster, typename pcl::PointCloud<PointT>::Ptr cloud, PCKDTree<PointT>* tree, float clusterTolerance)
 {
     processed[index] = true;
     PointT current_point = cloud->points[index];
@@ -207,12 +206,11 @@ void ProcessPointClouds<PointT>::clusterHelper(int index, std::vector<bool>& pro
     // vector to store indices of neighbours
     std::vector< int > k_indices;
     std::vector< float > k_sqr_distances;
-    int n = tree->radiusSearch( current_point, clusterTolerance, k_indices, k_sqr_distances);
+    tree->radiusSearch( current_point, clusterTolerance, k_indices, k_sqr_distances);
     for(int n_ind: k_indices){
         if(!processed[n_ind])
             clusterHelper(n_ind, processed, cluster, cloud, tree, clusterTolerance);
     }
-    
 }
 
 // My custom Clustering function
@@ -224,8 +222,11 @@ std::vector<typename pcl::PointCloud<PointT>::Ptr> ProcessPointClouds<PointT>::C
     auto startTime = std::chrono::steady_clock::now();
     std::vector<typename pcl::PointCloud<PointT>::Ptr> clusters;
     // Temp: Using PCL Kd Tree for now, because I need to create my own kdtree first
-    typename pcl::search::KdTree<PointT>::Ptr tree(new pcl::search::KdTree<PointT>);
-    tree->setInputCloud(cloud);
+    //typename pcl::search::KdTree<PointT>::Ptr tree(new pcl::search::KdTree<PointT>);
+    //tree->setInputCloud(cloud);
+    PCKDTree<PointT>* tree = new PCKDTree<PointT>();
+    for(int i=0; i<cloud->points.size(); i++)
+        tree->insert(cloud->points[i], i); 
     std::vector<bool> processed(cloud->points.size());
     for(int i=0; i<cloud->points.size(); i++) {
         if(!processed[i]) {
