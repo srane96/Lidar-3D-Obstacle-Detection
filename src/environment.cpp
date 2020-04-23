@@ -40,7 +40,7 @@ void cityBlockStream(pcl::visualization::PCLVisualizer::Ptr& viewer, ProcessPoin
     pcl::PointCloud<pcl::PointXYZI>::Ptr filterCloud = pointProcessor->FilterCloud(inputCloud, 0.2 , Eigen::Vector4f (-15, -5, -2, 1), Eigen::Vector4f (30, 7, 1, 1));
     std::pair<pcl::PointCloud<pcl::PointXYZI>::Ptr, pcl::PointCloud<pcl::PointXYZI>::Ptr>  outputPair = pointProcessor->Segment(filterCloud, 100, 0.2);
     //std::vector<pcl::PointCloud<pcl::PointXYZI>::Ptr> cloudClusters = pointProcessor->Clustering(outputPair.first, 0.6, 20, 1000);
-    std::vector<pcl::PointCloud<pcl::PointXYZI>::Ptr> cloudClusters = pointProcessor->CustomClustering(outputPair.first, 0.5, 10, 1000);
+    std::vector<pcl::PointCloud<pcl::PointXYZI>::Ptr> cloudClusters = pointProcessor->CustomClustering(outputPair.first, 0.5, 15, 1000);
     int clusterId = 0;
     std::vector<Color> colors = {Color(1,0,0), Color(0,1,0), Color(0,0,1), Color(1,0,1), Color(1,1,1), Color(0.5,0.0,0.6)};
     renderPointCloud(viewer, outputPair.second,"Road", Color(0,1,0));
